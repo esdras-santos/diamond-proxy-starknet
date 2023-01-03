@@ -1,0 +1,473 @@
+[
+    {
+        "members": [
+            {
+                "name": "low",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "high",
+                "offset": 1,
+                "type": "felt"
+            }
+        ],
+        "name": "Uint256",
+        "size": 2,
+        "type": "struct"
+    },
+    {
+        "data": [
+            {
+                "name": "_rightid",
+                "type": "Uint256"
+            },
+            {
+                "name": "_period",
+                "type": "Uint256"
+            },
+            {
+                "name": "_who",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "GetRight_4215fdfe",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "_erc721",
+                "type": "felt"
+            },
+            {
+                "name": "_nftid",
+                "type": "Uint256"
+            }
+        ],
+        "keys": [],
+        "name": "DepositedNFT_8b187cf9",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "owner",
+                "type": "felt"
+            },
+            {
+                "name": "amount",
+                "type": "Uint256"
+            }
+        ],
+        "keys": [],
+        "name": "RoyaltiesWithdraw_644800e6",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_20__rightid",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_21__period",
+                "type": "Uint256"
+            }
+        ],
+        "name": "getRights_1d3ae1b2",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_23__erc721",
+                "type": "felt"
+            },
+            {
+                "name": "__warp_24__nftid",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_25__dailyPrice",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_26__maxPeriod",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_27__amount",
+                "type": "Uint256"
+            }
+        ],
+        "name": "depositNFT_d21d34f4",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_31__rightid",
+                "type": "Uint256"
+            }
+        ],
+        "name": "withdrawRoyalties_5daa02ed",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_39__rightid",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_40__rightIndex",
+                "type": "Uint256"
+            }
+        ],
+        "name": "withdrawNFT_3a0196af",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_44__rightid",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_45__available",
+                "type": "felt"
+            },
+            {
+                "name": "__warp_46__nftindex",
+                "type": "Uint256"
+            }
+        ],
+        "name": "setAvailability_e0beb8c0",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_47__rightid",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_48__platform",
+                "type": "felt"
+            }
+        ],
+        "name": "verifyRight_088ce803",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_50__rightid",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_51__platform",
+                "type": "felt"
+            }
+        ],
+        "name": "verified_24d73567",
+        "outputs": [
+            {
+                "name": "__warp_52",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_62__newToken",
+                "type": "felt"
+            }
+        ],
+        "name": "setGovernanceToken_f8570170",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "currentTreasury_0f265bdd",
+        "outputs": [
+            {
+                "name": "__warp_63",
+                "type": "Uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_64__rightid",
+                "type": "Uint256"
+            }
+        ],
+        "name": "dailyPriceOf_ba987777",
+        "outputs": [
+            {
+                "name": "__warp_65",
+                "type": "Uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_66__rightid",
+                "type": "Uint256"
+            }
+        ],
+        "name": "availableRightsOf_4394dd76",
+        "outputs": [
+            {
+                "name": "__warp_67",
+                "type": "Uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_68__rightid",
+                "type": "Uint256"
+            }
+        ],
+        "name": "maxPeriodOf_26e07ef6",
+        "outputs": [
+            {
+                "name": "__warp_69",
+                "type": "Uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_70__rightid",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_71__holder",
+                "type": "felt"
+            }
+        ],
+        "name": "rightsPeriodOf_ef3776d7",
+        "outputs": [
+            {
+                "name": "__warp_72",
+                "type": "Uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_73__rightsHolder",
+                "type": "felt"
+            }
+        ],
+        "name": "rightsOf_9a9a4f46",
+        "outputs": [
+            {
+                "name": "__warp_74_len",
+                "type": "felt"
+            },
+            {
+                "name": "__warp_74",
+                "type": "Uint256*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_75__owner",
+                "type": "felt"
+            }
+        ],
+        "name": "propertiesOf_c7c314e0",
+        "outputs": [
+            {
+                "name": "__warp_76_len",
+                "type": "felt"
+            },
+            {
+                "name": "__warp_76",
+                "type": "Uint256*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "getAvailableNFTs_32702c95",
+        "outputs": [
+            {
+                "name": "__warp_77_len",
+                "type": "felt"
+            },
+            {
+                "name": "__warp_77",
+                "type": "Uint256*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_78__rightid",
+                "type": "Uint256"
+            }
+        ],
+        "name": "rightHoldersOf_e18138d7",
+        "outputs": [
+            {
+                "name": "__warp_79_len",
+                "type": "felt"
+            },
+            {
+                "name": "__warp_79",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_80__rightid",
+                "type": "Uint256"
+            },
+            {
+                "name": "__warp_81__holder",
+                "type": "felt"
+            }
+        ],
+        "name": "holderDeadline_5e4df22c",
+        "outputs": [
+            {
+                "name": "__warp_82",
+                "type": "Uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_83__rightid",
+                "type": "Uint256"
+            }
+        ],
+        "name": "ownerOf_6352211e",
+        "outputs": [
+            {
+                "name": "__warp_84",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_85__rightid",
+                "type": "Uint256"
+            }
+        ],
+        "name": "availabilityOf_9fe8b786",
+        "outputs": [
+            {
+                "name": "__warp_86",
+                "type": "felt"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_87__rightid",
+                "type": "Uint256"
+            }
+        ],
+        "name": "rightURI_e6be6db1",
+        "outputs": [
+            {
+                "name": "__warp_88_len",
+                "type": "felt"
+            },
+            {
+                "name": "__warp_88",
+                "type": "felt*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_89__rightid",
+                "type": "Uint256"
+            }
+        ],
+        "name": "originOf_794b2a07",
+        "outputs": [
+            {
+                "name": "__warp_90_len",
+                "type": "felt"
+            },
+            {
+                "name": "__warp_90",
+                "type": "Uint256*"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_19__owner",
+                "type": "felt"
+            }
+        ],
+        "name": "constructor",
+        "outputs": [],
+        "type": "constructor"
+    }
+]

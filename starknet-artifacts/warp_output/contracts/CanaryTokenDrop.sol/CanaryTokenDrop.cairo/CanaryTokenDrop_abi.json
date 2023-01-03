@@ -1,0 +1,68 @@
+[
+    {
+        "members": [
+            {
+                "name": "low",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "high",
+                "offset": 1,
+                "type": "felt"
+            }
+        ],
+        "name": "Uint256",
+        "size": 2,
+        "type": "struct"
+    },
+    {
+        "data": [
+            {
+                "name": "claimer",
+                "type": "felt"
+            },
+            {
+                "name": "amount_claimed",
+                "type": "Uint256"
+            }
+        ],
+        "keys": [],
+        "name": "Droped_2b84f454",
+        "type": "event"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_3__amount",
+                "type": "Uint256"
+            }
+        ],
+        "name": "drop_211d9a53",
+        "outputs": [],
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "maximumToClaim_bc6032a9",
+        "outputs": [
+            {
+                "name": "__warp_4",
+                "type": "Uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "__warp_2__canary",
+                "type": "felt"
+            }
+        ],
+        "name": "constructor",
+        "outputs": [],
+        "type": "constructor"
+    }
+]
