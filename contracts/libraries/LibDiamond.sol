@@ -121,14 +121,14 @@ library LibDiamond {
         AppStorage appStorage = diamondStorage();
         require(_functionSelectors.length > 0, "LibDiamondCut: No selectors in facet to cut");
         require(_facetAddress != address(0), "LibDiamondCut: Add facet can't be address(0)");
-        uint96 selectorPosition = uint96(appStorage.facetFunctionSelectors(_facetAddress).functionSelectors.length);
+        uint96 selectorPosition = uint96(appStorage.facetFunctionSelectorsSelectors(_facetAddress).length);
         // add new facet address if it does not exist
         if (selectorPosition == 0) {
             addFacet(_facetAddress);            
         }
         for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {
             bytes4 selector = _functionSelectors[selectorIndex];
-            address oldFacetAddress = appStorage.selectorToFacetAndPosition(selector).facetAddress;
+            address oldFacetAddress = appStorage.selectorToFacetAndPositionFacet(selector);
             require(oldFacetAddress == address(0), "LibDiamondCut: Can't add function that already exists");
             addFunction( selector, selectorPosition, _facetAddress);
             selectorPosition++;
@@ -139,14 +139,14 @@ library LibDiamond {
         AppStorage appStorage = diamondStorage();
         require(_functionSelectors.length > 0, "LibDiamondCut: No selectors in facet to cut");
         require(_facetAddress != address(0), "LibDiamondCut: Add facet can't be address(0)");
-        uint96 selectorPosition = uint96(appStorage.facetFunctionSelectors(_facetAddress).functionSelectors.length);
+        uint96 selectorPosition = uint96(appStorage.facetFunctionSelectorsSelectors(_facetAddress).length);
         // add new facet address if it does not exist
         if (selectorPosition == 0) {
             addFacet(_facetAddress);
         }
         for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {
             bytes4 selector = _functionSelectors[selectorIndex];
-            address oldFacetAddress = appStorage.selectorToFacetAndPosition(selector).facetAddress;
+            address oldFacetAddress = appStorage.selectorToFacetAndPositionFacet(selector);
             require(oldFacetAddress != _facetAddress, "LibDiamondCut: Can't replace function with same function");
             removeFunction(oldFacetAddress, selector);
             addFunction(selector, selectorPosition, _facetAddress);
@@ -161,7 +161,7 @@ library LibDiamond {
         require(_facetAddress == address(0), "LibDiamondCut: Remove facet address must be address(0)");
         for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {
             bytes4 selector = _functionSelectors[selectorIndex];
-            address oldFacetAddress = appStorage.selectorToFacetAndPosition(selector).facetAddress;
+            address oldFacetAddress = appStorage.selectorToFacetAndPositionFacet(selector);
             removeFunction(oldFacetAddress, selector);
         }
     }
@@ -170,7 +170,7 @@ library LibDiamond {
         AppStorage appStorage = diamondStorage();
         enforceHasContractCode(_facetAddress, "LibDiamondCut: New facet has no code");
         address[] memory facetAddresses = appStorage.facetAddresses();
-        bytes4[] memory functionSelectors = appStorage.facetFunctionSelectors(_facetAddress).functionSelectors;
+        bytes32[] memory functionSelectors = appStorage.facetFunctionSelectorsSelectors(_facetAddress);
         appStorage.setFacetFunctionSelectors(_facetAddress, functionSelectors, facetAddresses.length);
         facetAddresses[facetAddresses.length] = _facetAddress;
         appStorage.setFacetAddresses(facetAddresses);
@@ -180,8 +180,8 @@ library LibDiamond {
     function addFunction(bytes4 _selector, uint96 _selectorPosition, address _facetAddress) internal {
         AppStorage appStorage = diamondStorage();
         appStorage.setSelectorToFacetAndPosition(_selector, _facetAddress, _selectorPosition);
-        bytes4[] memory functionSelectors = appStorage.facetFunctionSelectors(_facetAddress).functionSelectors;
-        uint256 position = appStorage.facetFunctionSelectors(_facetAddress).facetAddressPosition;
+        bytes32[] memory functionSelectors = appStorage.facetFunctionSelectorsSelectors(_facetAddress);
+        uint256 position = appStorage.facetFunctionSelectorsPosition(_facetAddress);
         functionSelectors[functionSelectors.length] = _selector;
         appStorage.setFacetFunctionSelectors(_facetAddress, functionSelectors, position);
     }
@@ -192,21 +192,21 @@ library LibDiamond {
         // an immutable function is a function defined directly in a diamond
         require(_facetAddress != address(this), "LibDiamondCut: Can't remove immutable function");
         // replace selector with last selector, then delete last selector
-        uint256 selectorPosition = appStorage.selectorToFacetAndPosition(_selector).functionSelectorPosition;
-        uint256 lastSelectorPosition = appStorage.facetFunctionSelectors(_facetAddress).functionSelectors.length - 1;
+        uint256 selectorPosition = appStorage.selectorToFacetAndPositionPosition(_selector);
+        uint256 lastSelectorPosition = appStorage.facetFunctionSelectorsSelectors(_facetAddress).length - 1;
         // if not the same then replace _selector with lastSelector
         if (selectorPosition != lastSelectorPosition) {
-            bytes4 lastSelector = appStorage.facetFunctionSelectors(_facetAddress).functionSelectors[lastSelectorPosition];
-            bytes4[] memory selectors = appStorage.facetFunctionSelectors(_facetAddress).functionSelectors;
+            bytes32 lastSelector = appStorage.facetFunctionSelectorsSelectors(_facetAddress)[lastSelectorPosition];
+            bytes32[] memory selectors = appStorage.facetFunctionSelectorsSelectors(_facetAddress);
             selectors[selectorPosition] = lastSelector;
-            uint256 position = appStorage.facetFunctionSelectors(_facetAddress).facetAddressPosition;
+            uint256 position = appStorage.facetFunctionSelectorsPosition(_facetAddress);
             appStorage.setFacetFunctionSelectors(_facetAddress, selectors, position);
 
-            address facet = appStorage.selectorToFacetAndPosition(_selector).facetAddress;
+            address facet = appStorage.selectorToFacetAndPositionFacet(_selector);
             appStorage.setSelectorToFacetAndPosition(lastSelector, facet, uint96(selectorPosition));
         }
         // delete the last selector
-        bytes4[] memory functionSelectors = appStorage.facetFunctionSelectors(_facetAddress).functionSelectors;
+        bytes32[] memory functionSelectors = appStorage.facetFunctionSelectorsSelectors(_facetAddress);
         for(uint256 i; i < functionSelectors.length - 2; i++){
             functionSelectors[1] = functionSelectors[i]; 
         }
@@ -216,13 +216,13 @@ library LibDiamond {
         if (lastSelectorPosition == 0) {
             // replace facet address with last facet address and delete last facet address
             uint256 lastFacetAddressPosition = appStorage.facetAddresses().length - 1;
-            uint256 facetAddressPosition = appStorage.facetFunctionSelectors(_facetAddress).facetAddressPosition;
+            uint256 facetAddressPosition = appStorage.facetFunctionSelectorsPosition(_facetAddress);
             if (facetAddressPosition != lastFacetAddressPosition) {
                 address lastFacetAddress = appStorage.facetAddresses(lastFacetAddressPosition);
                 address[] memory _facetAddresses = appStorage.facetAddresses();
                 _facetAddresses[facetAddressPosition] = lastFacetAddress;
                 appStorage.setFacetAddresses(_facetAddresses);
-                bytes4[] memory selectors = appStorage.facetFunctionSelectors(lastFacetAddress).functionSelectors;
+                bytes32[] memory selectors = appStorage.facetFunctionSelectorsSelectors(lastFacetAddress);
                 appStorage.setFacetFunctionSelectors(lastFacetAddress, selectors, facetAddressPosition);
             }
             address[] memory facetAddresses = appStorage.facetAddresses();

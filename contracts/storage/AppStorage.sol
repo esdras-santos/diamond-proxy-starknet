@@ -7,11 +7,11 @@ contract AppStorage{
     }
 
     struct FacetFunctionSelectors {
-        bytes4[] functionSelectors;
+        bytes32[] functionSelectors;
         uint256 facetAddressPosition; // position of facetAddress in facetAddresses array
     }
     
-    struct AppStorage{
+    struct Storage{
         uint256 treasury;
         uint256 budget;
         uint256 period;
@@ -48,7 +48,7 @@ contract AppStorage{
 
         // maps function selector to the facet address and
         // the position of the selector in the facetFunctionSelectors.selectors array
-        mapping(bytes4 => FacetAddressAndPosition) selectorToFacetAndPosition;
+        mapping(bytes32 => FacetAddressAndPosition) selectorToFacetAndPosition;
         // maps facet addresses to function selectors
         mapping(address => FacetFunctionSelectors) facetFunctionSelectors;
         // facet addresses
@@ -60,7 +60,7 @@ contract AppStorage{
         address contractOwner;
     }
 
-    AppStorage internal appStorage;
+    Storage internal appStorage;
 
     address storageOwner;
 
@@ -265,8 +265,12 @@ contract AppStorage{
         appStorage.validated[_id][_platform][_user] = _validated;
     }
 
-    function selectorToFacetAndPosition(bytes4 _selector) external view returns (FacetAddressAndPosition memory) {
-        return appStorage.selectorToFacetAndPosition[_selector];
+    function selectorToFacetAndPositionFacet(bytes4 _selector) external view returns (address) {
+        return appStorage.selectorToFacetAndPosition[_selector].facetAddress;
+    }
+
+    function selectorToFacetAndPositionPosition(bytes4 _selector) external view returns (uint96) {
+        return appStorage.selectorToFacetAndPosition[_selector].functionSelectorPosition;
     }
 
     function deleteSelectorToFacetAndPosition(bytes4 _selector) external {
@@ -274,14 +278,18 @@ contract AppStorage{
         delete appStorage.selectorToFacetAndPosition[_selector];
     }
 
-    function setSelectorToFacetAndPosition(bytes4 _selector, address _facetAddress, uint96 _position) external {
+    function setSelectorToFacetAndPosition(bytes32 _selector, address _facetAddress, uint96 _position) external {
         require(allowedFacet[msg.sender] == true, "not allowed facet");       
         appStorage.selectorToFacetAndPosition[_selector].functionSelectorPosition = _position;
         appStorage.selectorToFacetAndPosition[_selector].facetAddress = _facetAddress;
     }
 
-    function facetFunctionSelectors(address _facet) external view returns (FacetFunctionSelectors memory){
-         return appStorage.facetFunctionSelectors[_facet];
+    function facetFunctionSelectorsSelectors(address _facet) external view returns (bytes32[] memory){
+        return appStorage.facetFunctionSelectors[_facet].functionSelectors;
+    }
+
+    function facetFunctionSelectorsPosition(address _facet) external view returns (uint256) {
+        return appStorage.facetFunctionSelectors[_facet].facetAddressPosition;
     }
 
     function deleteFacetFunctionSelectors(address _facet) external  {
@@ -289,7 +297,7 @@ contract AppStorage{
         delete appStorage.facetFunctionSelectors[_facet].facetAddressPosition;
     }
 
-    function setFacetFunctionSelectors(address _facet, bytes4[] calldata _selectors, uint256 _position) external {
+    function setFacetFunctionSelectors(address _facet, bytes32[] calldata _selectors, uint256 _position) external {
         require(allowedFacet[msg.sender] == true, "not allowed facet");
         appStorage.facetFunctionSelectors[_facet].functionSelectors = _selectors;
         appStorage.facetFunctionSelectors[_facet].facetAddressPosition = _position;

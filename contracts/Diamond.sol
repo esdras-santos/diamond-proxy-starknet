@@ -12,6 +12,7 @@ import { LibDiamond } from "./libraries/LibDiamond.sol";
 import { IDiamondCut } from "./interfaces/IDiamondCut.sol";
 
 contract Diamond { 
+    event Return(bytes _return);
     AppStorage appStorage = LibDiamond.diamondStorage();   
 
     constructor(address _contractOwner, address _diamondCutFacet) payable {
@@ -31,9 +32,9 @@ contract Diamond {
 
     // Find facet for function that is called and execute the
     // function if a facet is found and return any value.
-    fallback(bytes calldata) external payable returns(bytes memory) {
+    fallback() external payable {
         // get facet from function selector
-        address facet = appStorage.selectorToFacetAndPosition(msg.sig).facetAddress;
+        address facet = appStorage.selectorToFacetAndPositionFacet(msg.sig);
         require(facet != address(0), "Diamond: Function does not exist");
         // Execute external function from facet using delegatecall and return any value.
         (bool success, bytes memory data) = facet.delegatecall(msg.data);
@@ -45,7 +46,7 @@ contract Diamond {
                 revert("Diamond function reverted");
             }
         } else {
-            return data;
+            emit Return(data);
         }
     }
 
